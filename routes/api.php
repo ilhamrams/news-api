@@ -24,6 +24,16 @@ Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logo
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
+    Route::get('/me', function (Request $request) {
+        return response()->json([
+            'success' => true,
+            'message' => 'User data retrieved successfully',
+            'data' => [
+                'user' => $request->user(),
+            ]
+        ], 200);;
+    });
+
     Route::group(['prefix' => 'beritas'], function () {
         Route::get('/', [BeritaApiController::class, 'index']);
         Route::get('/{id}', [BeritaApiController::class, 'show']);
