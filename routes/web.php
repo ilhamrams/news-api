@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Artisan;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome')->with('status', 'sealamat datang bejir');
 });
 
 Route::get('/generate', function () {
@@ -31,7 +31,7 @@ Route::get('/generate', function () {
     // Buat symbolic link baru
     Artisan::call('storage:link');
 
-    redirect()->back();
+    return redirect()->back()->with('status', 'Storage linked successfully!');
 });
 
 Route::get('/migrate-fresh-seed', function () {
