@@ -33,3 +33,10 @@ Route::get('/generate', function () {
 
     redirect()->back();
 });
+
+Route::get('/migrate-fresh-seed', function () {
+    // Menjalankan perintah migrate:fresh --seed
+    Artisan::call('migrate:fresh --seed');
+
+    return redirect()->back()->with('status', 'Database refreshed and seeded successfully!');
+});
