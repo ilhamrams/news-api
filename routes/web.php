@@ -40,3 +40,10 @@ Route::get('/migrate-fresh-seed', function () {
 
     return redirect()->back()->with('status', 'Database refreshed and seeded successfully!');
 });
+
+Route::get('/migrate', function () {
+    // Menjalankan perintah migrate:fresh --seed
+    Artisan::call('migrate');
+
+    return redirect()->back()->with('status', 'Database refreshed and seeded successfully!');
+});
