@@ -38,13 +38,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/', [BeritaApiController::class, 'index']);
         Route::get('/{id}', [BeritaApiController::class, 'show']);
         Route::post('/', [BeritaApiController::class, 'store']);
+        Route::delete('/delete/{id}', [BeritaApiController::class, 'destroy']);
     });
 
     Route::group(['prefix' => 'kategoris'], function () {
         Route::get('/', [KategoriApiController::class, 'index']);
-        Route::get('/store', [KategoriApiController::class, 'testStore']);
-        Route::get('/{id}', [KategoriApiController::class, 'show']);
-        Route::post('/', [KategoriApiController::class, 'store']);
     });
+
     // php artisan serve --host=0.0.0.0 --port=8000
 });

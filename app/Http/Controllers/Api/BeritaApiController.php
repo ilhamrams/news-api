@@ -15,12 +15,9 @@ class BeritaApiController extends Controller
      */
     public function index()
     {
-        if (!Auth::check()) {
-            return response()->json(['status' => false, 'message' => 'Unauthenticated.'], 401);
-        }
         $beritas = Berita::with('kategori')->latest()->get();
 
-        $kategoris = Kategori::all();
+        // $kategoris = Kategori::all();
 
         return response()->json([
             'success' => true,
@@ -35,7 +32,7 @@ class BeritaApiController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function store(Request $request)
+    public function store(String $id, Request $request)
     {
         // Validasi data yang diterima dari Flutter
         $request->validate([
@@ -71,39 +68,24 @@ class BeritaApiController extends Controller
             'data' => $berita,
         ], 201);
     }
-    /**
-     * Store a newly created resource in storage.
-     */
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $berita = Berita::find($id);
+
+        if (!$berita) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Berita tidak ditemukan',
+            ], 400);
+        }
+
+        $berita->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Berita berhasil di hapus',
+        ], 400);
+
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +17,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/generate', function () {
+    $publicStoragePath = public_path('storage');
+
+    // Cek apakah symbolic link sudah ada
+    if (File::exists($publicStoragePath)) {
+        // Hapus symbolic link yang sudah ada
+        File::delete($publicStoragePath);
+    }
+
+    // Buat symbolic link baru
+    Artisan::call('storage:link');
+
+    redirect()->back();
 });
